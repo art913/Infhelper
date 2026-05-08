@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Теория — ИнфХелпер{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="section-title">Теория ЕГЭ по информатике</h1>
+    <p class="text-body-secondary mb-4">
+        Все 27 заданий с подробным разбором теории, формулами и примерами решения.
+    </p>
+
+    <div class="d-flex flex-wrap gap-2 mb-4" id="categoryFilters">
+        <button class="filter-btn active" data-filter="all">Все</button>
+        {% set categories = tasks | map(attribute='category') | unique | list %}
+        {% for cat in categories %}
+        <button class="filter-btn" data-filter="{{ cat }}">{{ cat }}</button>
+        {% endfor %}
+    </div>
+
+    <div class="row g-3" id="taskGrid">
+        {% for task in tasks %}
+        <div class="col-md-6 col-lg-4 task-item" data-category="{{ task.category }}">
+            <a href="{{ url_for('task_detail', task_id=task.id) }}" class="task-card">
+                <div class="d-flex align-items-start gap-3">
+                    <div class="task-number
+                        {% if task.difficulty == 'базовый' %}bg-success bg-opacity-10 text-success
+                        {% elif task.difficulty == 'повышенный' %}bg-warning bg-opacity-10 text-warning
+                        {% else %}bg-danger bg-opacity-10 text-danger{% endif %}">
+                        {{ task.id }}
+                    </div>
+                    <div>
+                        <div class="task-title">{{ task.title }}</div>
+                        <div class="d-flex gap-2 align-items-center mt-1">
+                            <span class="badge
+                                {% if task.difficulty == 'базовый' %}badge-basic
+                                {% elif task.difficulty == 'повышенный' %}badge-medium
+                                {% else %}badge-hard{% endif %}">
+                                {{ task.difficulty }}
+                            </span>
+                            <small class="text-body-secondary">{{ task.category }}</small>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.task-item').forEach(item => {
+            if (filter === 'all' || item.dataset.category === filter) {
+                item.style.display = '';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

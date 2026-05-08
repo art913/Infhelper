@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Тестирование — ИнфХелпер{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="section-title">Тестирование</h1>
+    <p class="text-body-secondary mb-4">
+        Пройдите пробный вариант ЕГЭ по информатике. Каждый вариант содержит 27 заданий
+        и таймер на 3 часа 55 минут &mdash; как на реальном экзамене.
+    </p>
+
+    <div class="row g-4">
+        {% for test in tests %}
+        <div class="col-md-6 col-lg-4">
+            <div class="feature-card">
+                <div class="feature-icon bg-primary bg-opacity-10 text-primary">
+                    <i class="bi bi-clipboard-check"></i>
+                </div>
+                <h5 class="fw-bold">{{ test.title }}</h5>
+                <p class="text-body-secondary">{{ test.description }}</p>
+                <ul class="list-unstyled text-body-secondary mb-3">
+                    <li><i class="bi bi-list-ol me-2"></i>{{ test.questions | length }} заданий</li>
+                    <li><i class="bi bi-clock me-2"></i>{{ test.time_minutes }} минут</li>
+                    <li><i class="bi bi-star me-2"></i>Максимум {{ test.max_score }} баллов</li>
+                </ul>
+                <a href="{{ url_for('test_session', test_id=test.id) }}" class="btn btn-primary w-100">
+                    <i class="bi bi-play-fill me-2"></i>Начать тест
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="mt-5 p-4 rounded-3" style="background: var(--bs-tertiary-bg);">
+        <h5 class="fw-bold"><i class="bi bi-info-circle me-2"></i>Как проходит тестирование</h5>
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <p class="mb-1 fw-semibold">Формат</p>
+                <p class="text-body-secondary">27 заданий, как на настоящем ЕГЭ. Задания 1-25 оцениваются по 1 баллу, задания 26-27 &mdash; по 2 балла.</p>
+            </div>
+            <div class="col-md-4">
+                <p class="mb-1 fw-semibold">Таймер</p>
+                <p class="text-body-secondary">3 часа 55 минут. Таймер запускается при открытии теста. Можно завершить досрочно.</p>
+            </div>
+            <div class="col-md-4">
+                <p class="mb-1 fw-semibold">Результат</p>
+                <p class="text-body-secondary">После завершения вы увидите набранные баллы и разбор каждого задания с правильными ответами.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

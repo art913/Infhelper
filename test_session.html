@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}{{ test.title }} — Тестирование{% endblock %}
+
+{% block content %}
+<div class="timer-bar">
+    <div class="container d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div class="d-flex align-items-center gap-3">
+            <span class="fw-bold">{{ test.title }}</span>
+            <div class="progress" style="width: 200px; height: 8px;">
+                <div class="progress-bar bg-primary" id="progressBar" style="width: 0%">0/{{ test.questions | length }}</div>
+            </div>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+            <div>
+                <i class="bi bi-clock me-1"></i>
+                <span class="timer-display" id="timerDisplay">03:55:00</span>
+            </div>
+            <button class="btn btn-danger btn-sm" id="submitTest">
+                <i class="bi bi-check2-all me-1"></i>Завершить
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="container py-4">
+    <div class="row">
+        <div class="col-lg-9">
+            {% for q in test.questions %}
+            <div class="question-card" id="question-{{ q.number }}">
+                <div class="d-flex gap-3 align-items-start">
+                    <div class="question-number">{{ q.number }}</div>
+                    <div class="flex-grow-1">
+                        <div class="whitespace-pre-wrap mb-3">{{ q.text }}</div>
+                        <div class="d-flex align-items-center gap-2">
+                            <input type="text" class="form-control answer-input question-input"
+                                   data-question="{{ q.number }}"
+                                   placeholder="Ваш ответ" autocomplete="off">
+                            {% if q.max_score > 1 %}
+                            <span class="badge bg-primary">{{ q.max_score }} б.</span>
+                            {% endif %}
+                        </div>
+                        <div class="question-result mt-2"></div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="col-lg-3">
+            <div class="sticky-top" style="top: 130px;">
+                <h6 class="fw-bold mb-3">Навигация</h6>
+                <div class="d-flex flex-wrap gap-2 mb-4" id="questionNav">
+                    {% for q in test.questions %}
+                    <div class="question-nav-btn" data-q="{{ q.number }}">{{ q.number }}</div>
+                    {% endfor %}
+                </div>
+
+                <div id="testResults" style="display: none;">
+                    <div class="score-display">
+                        <div class="score-circle">
+                            <div class="score-value" id="scoreValue">0</div>
+                            <div class="score-max" id="scoreMax">из 29</div>
+                        </div>
+                        <div class="h5 fw-bold" id="scoreGrade"></div>
+                        <div class="text-body-secondary" id="scorePercent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const testData = {{ test | tojson }};
+    initTestSession(testData);
+</script>
+{% endblock %}

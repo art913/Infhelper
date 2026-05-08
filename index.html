@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}ИнфХелпер — Подготовка к ЕГЭ по информатике{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <h1>Подготовься к ЕГЭ<br>по информатике</h1>
+                <p class="lead mb-4">
+                    Полный курс подготовки: теория, практика и тестирование по всем
+                    27 заданиям. Разбирай материал, решай задачи и проверяй свои знания.
+                </p>
+                <div class="d-flex gap-3 flex-wrap">
+                    <a href="{{ url_for('theory') }}" class="btn btn-light btn-lg px-4">
+                        <i class="bi bi-book me-2"></i>Начать учиться
+                    </a>
+                    <a href="{{ url_for('tests') }}" class="btn btn-outline-light btn-lg px-4">
+                        <i class="bi bi-clipboard-check me-2"></i>Пройти тест
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <i class="bi bi-book text-primary"></i>
+                    <div class="stat-number text-primary">{{ stats.tasks }}</div>
+                    <div class="stat-label">Заданий с теорией</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <i class="bi bi-pencil-square text-success"></i>
+                    <div class="stat-number text-success">{{ stats.practice }}</div>
+                    <div class="stat-label">Задач для практики</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <i class="bi bi-clipboard-check text-warning"></i>
+                    <div class="stat-number text-warning">{{ stats.tests }}</div>
+                    <div class="stat-label">Вариантов тестов</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <h2 class="section-title text-center mb-5">Как подготовиться</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon bg-primary bg-opacity-10 text-primary">
+                        <i class="bi bi-book"></i>
+                    </div>
+                    <h5 class="fw-bold">1. Изучай теорию</h5>
+                    <p class="text-body-secondary mb-3">
+                        Подробный разбор каждого из 27 заданий ЕГЭ: ключевые формулы,
+                        алгоритмы решения и разобранные примеры.
+                    </p>
+                    <a href="{{ url_for('theory') }}" class="back-link">
+                        Перейти к теории <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon bg-success bg-opacity-10 text-success">
+                        <i class="bi bi-pencil-square"></i>
+                    </div>
+                    <h5 class="fw-bold">2. Решай задачи</h5>
+                    <p class="text-body-secondary mb-3">
+                        Практикуйся на задачах разного уровня сложности с мгновенной
+                        проверкой ответа и подробным решением.
+                    </p>
+                    <a href="{{ url_for('practice') }}" class="back-link">
+                        Перейти к практике <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon bg-warning bg-opacity-10 text-warning">
+                        <i class="bi bi-clipboard-check"></i>
+                    </div>
+                    <h5 class="fw-bold">3. Проходи тесты</h5>
+                    <p class="text-body-secondary mb-3">
+                        Полные варианты ЕГЭ с таймером на 3 часа 55 минут.
+                        Проверь свою готовность к экзамену!
+                    </p>
+                    <a href="{{ url_for('tests') }}" class="back-link">
+                        Перейти к тестам <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
