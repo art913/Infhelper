@@ -1,2 +1,4 @@
 Flask>=3.0
 markupsafe>=2.1
+gunicorn>=22.0
+frozen-flask>=1.0
